@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Submit a Listing</title>
+</head>
+<body>
+  <h1>Post Your Listing</h1>
+  <form id="listingForm">
+    <input name="title" placeholder="Title" required><br>
+    <textarea name="description" placeholder="Description" required></textarea><br>
+    <input name="rent" type="number" placeholder="Rent" required><br>
+    <input name="address" placeholder="Address" required><br>
+    <input name="rooms" type="number" placeholder="Rooms" required><br>
+    <input name="contact" placeholder="Contact Info" required><br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    document.getElementById('listingForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
+
+      const response = await fetch('http://localhost:5000/api/listings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        alert('Listing submitted!');
+        e.target.reset();
+      } else {
+        alert('Submission failed.');
+      }
+    });
+  </script>
+</body>
+</html>

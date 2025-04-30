@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>All Listings</title>
+</head>
+<body>
+  <h1>Housing Listings</h1>
+  <div id="listingsContainer"></div>
+
+  <script>
+    fetch('http://localhost:5000/api/listings')
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById('listingsContainer');
+        data.forEach(listing => {
+          const listingDiv = document.createElement('div');
+          listingDiv.innerHTML = `
+            <h2>${listing.title}</h2>
+            <p>${listing.description}</p>
+            <p><strong>Rent:</strong> $${listing.rent}</p>
+            <p><strong>Address:</strong> ${listing.address}</p>
+            <p><strong>Rooms:</strong> ${listing.rooms}</p>
+            <p><strong>Contact:</strong> ${listing.contact}</p>
+            <hr>
+          `;
+          container.appendChild(listingDiv);
+        });
+      });
+  </script>
+</body>
+</html>
